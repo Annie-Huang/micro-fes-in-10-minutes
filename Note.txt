@@ -84,6 +84,7 @@ http://localhost:3000/remoteEntry.js
 
 
 In C:\react\micro-fes-in-10-minutes\host\webpack.config.js
+         3
       remotes: {
         remote: "remote@http://localhost:3000/remoteEntry.js",
            2        1
@@ -97,6 +98,9 @@ The C:\react\micro-fes-in-10-minutes\remote\webpack.config.js:
 The 'remote' in the prop name, need to match
 The C:\react\micro-fes-in-10-minutes\host\src\App.jsx
     import Counter from "remote/Counter";
+3.
+The 'remotes' means we are going to list a list of remote repos, whose expose object list we can use for the current repo.
+
 
 !!!! Not sure why color does not get in.....
 
