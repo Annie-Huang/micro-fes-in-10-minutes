@@ -1,0 +1,113 @@
+Micro-Frontends in Just 10 Minutes
+https://www.youtube.com/watch?v=s_Fs4AXsTnA
+
+https://github.com/jherr/micro-fes-in-10-minutes
+
+--------------------------------------------------------------
+
+PS C:\react\micro-fes-in-10-minutes> npx create-mf-app
+Need to install the following packages:
+  create-mf-app
+Ok to proceed? (y) y
+? Pick the name of your app: host
+? Project Type: Application
+? Port number: 8080
+? Framework: solid-js
+? Language: javascript
+? CSS: Tailwind
+? Packer: Webpack
+Your 'host' project is ready to go.
+
+Next steps:
+
+▶️ cd host
+▶️ npm install
+▶️ npm start
+
+PS C:\react\micro-fes-in-10-minutes\host> npm install
+PS C:\react\micro-fes-in-10-minutes\host> npm run start
+
+http://localhost:8080/
+
+-----------------
+
+PS C:\react\micro-fes-in-10-minutes> npx create-mf-app
+? Pick the name of your app: remote
+? Project Type: Application
+? Port number: 3000
+? Framework: solid-js
+? Language: javascript
+? CSS: Tailwind
+? Packer: Webpack
+Your 'remote' project is ready to go.
+
+Next steps:
+
+▶️ cd remote
+▶️ npm install
+▶️ npm start
+
+PS C:\react\micro-fes-in-10-minutes>
+
+PS C:\react\micro-fes-in-10-minutes\remote> npm install
+PS C:\react\micro-fes-in-10-minutes\remote> npm run start
+http://localhost:3000/
+
+----------------
+
+PS C:\react\micro-fes-in-10-minutes> npx create-mf-app
+? Pick the name of your app: react-host
+? Project Type: Application
+? Port number: 3001
+? Framework: react
+? Language: javascript
+? CSS: Tailwind
+? Packer: Webpack
+Your 'react-host' project is ready to go.
+
+Next steps:
+
+▶️ cd react-host
+▶️ npm install
+▶️ npm start
+
+PS C:\react\micro-fes-in-10-minutes\react-host> npm install
+PS C:\react\micro-fes-in-10-minutes\react-host> npm run start
+http://localhost:3001/
+
+---------------------------
+
+After adding exposes in C:\react\micro-fes-in-10-minutes\remote\webpack.config.js (line 49):
+  "./Counter": "./src/Counter.jsx",
+http://localhost:3000/remoteEntry.js
+
+
+In C:\react\micro-fes-in-10-minutes\host\webpack.config.js
+      remotes: {
+        remote: "remote@http://localhost:3000/remoteEntry.js",
+           2        1
+      },
+1.
+The 'remote' in "remote@http://localhost:3000/remoteEntry.js" needs to match
+The C:\react\micro-fes-in-10-minutes\remote\webpack.config.js:
+    new ModuleFederationPlugin({
+      name: "remote",
+2.
+The 'remote' in the prop name, need to match
+The C:\react\micro-fes-in-10-minutes\host\src\App.jsx
+    import Counter from "remote/Counter";
+
+!!!! Not sure why color does not get in.....
+
+
+Because remote is using solid.js and react-host is using react. So we need to wrap App.jsx into a element.
+e.g. counterWrapper. and expose it in webpack:
+      exposes: {
+        "./counterWrapper": "./src/counterWrapper.jsx",
+      },
+And then in C:\react\micro-fes-in-10-minutes\react-host\src\App.jsx
+     import counterWrapper from "remote/counterWrapper";
+
+!!!! Not sure why color does not get in.....
+
+-----------------------
